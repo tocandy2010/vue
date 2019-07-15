@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        #addbutton {
+            position: relative;
+            left: 80%
+        }
+    </style>
+</head>
+
+<body>
+    <div id='app'>
+        <div class="container">
+            <h2>To-do list</h2>
+            <p>The .table-hover class enables a hover state on table rows:</p>
+            <button class="btn btn-primary btn-lg" id='addbutton' data-toggle="modal" data-target="#myModal">
+                新增事項
+            </button>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>事項</th>
+                        <th>說明</th>
+                        <th>備註</th>
+                        <th>修改</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for = 'v in list' >
+                        <td>●</td>
+                        <td>{{v.matter}}</td>
+                        <td>{{v.description}}</td>
+                        <td>{{v.remarks}}</td>
+                        <td>
+                            <button type="button" class="btn btn-warning">修改</button>
+                            <button type="button" class="btn btn-danger">刪除</button>
+                        </td>
+                        
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            新增代辦事項
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="matter">事項</label>
+                            <input type="text" v-model='matter' class="form-control" id="matter">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">說明</label>
+                            <input type="text   " v-model='description' class="form-control" id="description">
+                        </div>
+                        <div class="form-group">
+                            <label for="remarks">備註</label>
+                            <input type="text" v-model='remarks' class="form-control" id="remarks">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" id='closemodel' data-dismiss="modal">關閉
+                        </button>
+                        <button type="button" class="btn btn-primary" @click='additem'>
+                            確認
+                        </button>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+    <script>
+
+        let vue = new Vue({
+            el:'#app',
+            data:{
+                list:[
+                    {matter:'打掃',description:'掃廁所及廚房',remarks:'仔細掃'}
+                ],
+                matter:'',
+                description:'',
+                remarks:'',
+            },
+            methods:{
+                additem(){
+                    let data = {matter:this.matter,description:this.description,remarks:this.remarks};
+                    this.list.push(data);
+                    $("#myModal").modal("hide");
+                    
+                }
+            }
+        })
+
+
+    </script>
+</body>
+
+</html>
