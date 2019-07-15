@@ -10,14 +10,46 @@
 <body>
     <div id="lab">
         <button v-on:click="count++"> 點按次數: {{count}} </button>
+        <count-bount :init-count='11' @cclick='t'></count-bount>
+        <h1>{{total}}</h1>
+        <ttt></ttt>
     </div>
 
-<script>
 
+
+<script>
+    var Child = {
+  template: '<h1>自定义组件!</h1>'
+}
+ 
+    Vue.component('count-bount',{
+        props:['initCount'],  //標籤屬性 屬性內容與到大寫會加上 - 符號
+        data:
+            function(){
+                return {
+                    count: this.initCount,
+                }
+            },
+        methods:{
+            addcount(){
+                this.count++
+            }
+        },
+        template:`<button v-on:click="addcount(); $emit('cclick')" > 點按次數: {{count}} </button>`
+    });
     var labApp = new Vue({
         el: '#lab',
         data: {
-            count: 0
+            count: 0,
+            total:0,
+        },
+        methods:{
+            t(){
+                this.total+=1;
+            }
+        },
+        components:{
+            'ttt':Child,
         }
     })
 

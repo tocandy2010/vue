@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+    <div id='lab'>
+        First name <input type="text" v-model='firstName'><br>
+        Last name <input type="text" v-model='lastName'><br>
+        <br/>
+        {{fullName}}
+        <br/>
+        {{ time | ymd(6)}}
+
+    </div>
+
+
+<script>
+
+    let labaApp = new Vue({
+        el:"#lab",
+        data:{
+            firstName: '111',
+            lastName: '222',
+            fullName:'111 222',
+            time:new Date(),
+        },
+        methods:{
+
+        },
+        // computed:{
+        //     fullName (){
+        //         return `${this.firstName} ${this.lastName}`
+        //     }
+        // },
+        watch:{
+            firstName (){
+                this.fullName = this.firstName+this.lastName
+            },
+            lastName (){
+                this.fullName = this.firstName+this.lastName
+            }
+        },
+        filters:{
+            ymd(e,n=3){
+                let time = new Date(e);
+                let y = time.getFullYear();
+                let m = time.getMonth();
+                let d = time.getDate();
+                let h = time.getHours();
+                let i = time.getMinutes();
+                let s = time.getSeconds();
+                if(n==6){
+                    return `${y}-${m}-${d} ${h}:${i}:${s}`;
+                }
+                return `${y}-${m}-${d}`;
+            }
+        },
+    })
+
+</script>
+
+</body>
+</html>

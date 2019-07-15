@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+
+    <div class="container" id="lab">
+
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <div class="page-header">
+                        <h1>無所不問、無所不答</h1>
+                </div>
+            </div>
+        </div>
+
+        <form class="form-horizontal">
+            <fieldset>
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="question">請輸入問題:</label>
+                    <div class="col-md-4">
+                        <input v-model='question' @input='questionInput' id="question" name="question" type="text" placeholder="" class="form-control input-md">
+                        <span class="help-block">問題請以問號結尾</span>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <h2>{{answer}}</h2>
+                <img :src='img'>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        var vue = new Vue({
+            el:'#lab',
+            data:{
+                answer:666666666,
+                img:"https://yesno.wtf/assets/yes/0-c44a7789d54cbdcad867fb7845ff03ae.gif",
+                question:'',
+            },
+            methods:{
+                questionInput(){
+                    let _this = this;
+                    axios.get("https://yesno.wtf/api")
+                    .then(function(res){
+                        _this.answer = res.data.answer;
+                        _this.img = res.data.image;
+                        console.log(res.data)
+                    })
+                }
+            }
+        })
+    
+    </script>
+
+</body>
+
+</html>
